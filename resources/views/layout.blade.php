@@ -10,6 +10,14 @@
     <style>body {padding: 80px;}</style>
   </head>
   <body>
+    {{-- フラッシュ・メッセージ --}}
+          @if (session('my_status'))
+              <div class="container mt-2">
+                  <div class="alert alert-success">
+                      {{ session('my_status') }}
+                  </div>
+              </div>
+          @endif
     <nav class='navbar navbar-expand-md navbar-dark bg-dark fixed-top'>
             <a class='navbar-brand' href={{route('shop.list')}}>Lunchmap</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -27,11 +35,11 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">ログイン</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">新規ユーザー登録</a>
                             </li>
                         @endif
                     @else

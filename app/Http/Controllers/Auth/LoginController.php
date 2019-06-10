@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,4 +37,20 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // ログインしたらトップページへ移動&ログインしましたと表示する
+        return redirect('shops/')->with('my_status', __('ログインしました。'));
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+        $request->session()->invalidate();
+
+        // ログアウトしたら、トップページへ移動
+        return redirect('/')->with('my_status', __('ログアウトしました。'));
+    }
+
 }

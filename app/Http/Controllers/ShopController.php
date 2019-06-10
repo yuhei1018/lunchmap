@@ -50,7 +50,7 @@ class ShopController extends Controller
         $shop->category_id = request('category_id');
         $shop->user_id = $user->id;
         $shop->save();
-        return redirect()->route('shop.detail', ['id' => $shop->id]);
+        return redirect()->route('shop.detail', ['id' => $shop->id])->with('my_status', __('新しいお店を追加しました。'));
     }
 
     /**
@@ -98,7 +98,7 @@ class ShopController extends Controller
       $shop->address = request('address');
       $shop->category_id = request('category_id');
       $shop->save();
-      return redirect()->route('shop.detail', ['id' => $shop->id]);
+      return redirect()->route('shop.detail', ['id' => $shop->id])->with('my_status', __('お店の情報を更新しました。'));
     }
 
     /**
@@ -111,6 +111,6 @@ class ShopController extends Controller
     {
         $shop = Shop::find($id);
         $shop->delete();
-        return redirect('/shops');
+        return redirect('/shops')->with('my_status', __('削除しました。'));
     }
 }
