@@ -50,7 +50,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
 
         // ログアウトしたら、トップページへ移動
-        return redirect('/')->with('my_status', __('ログアウトしました。'));
+        return redirect('shops/')->with('my_status', __('ログアウトしました。'));
     }
 
 }
