@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>{{ $shop->name }}を編集する</h1>
-    {{ Form::model($shop, ['route' => ['shop.update', $shop->id]]) }}
+    {{ Form::model($shop, ['route' => ['shop.update', $shop->id], 'method' => 'post', 'files' => true, "enctype"=>"multipart/form-data"]) }}
       <div class="form-group">
         {{ Form::label('name', '店名:') }}
         {{ Form::text('name', $shop->name) }}
@@ -14,6 +14,10 @@
       <div class="form-group">
         {{ Form::label('category_id', 'カテゴリ:') }}
         {{ Form::select('category_id', $categories) }}
+      </div>
+      <div class="form-group">
+        {{ Form::label('image_url', '写真', ['class' => 'control-label']) }}
+        {{ Form::file('image_url') }}
       </div>
       <div class="form-group">
         {{ Form::submit('更新する', ['class' => 'btn btn-primary']) }}

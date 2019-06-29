@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
@@ -48,9 +49,13 @@ class ShopController extends Controller
         $shop->name = request('name');
         $shop->address = request('address');
         $shop->category_id = request('category_id');
+
+        $time = date("Ymdhis");
+
+        $shop->image_url = $request->image_url->storeAs('public/shop_images', $time.'_'.Auth::user()->id . '.jpg');
         $shop->user_id = $user->id;
         $shop->save();
-        return redirect()->route('shop.detail', ['id' => $shop->id])->with('my_status', __('新しいお店を追加しました。'));
+        return redirect()->route('shop.detail', ['id' => $shop->id, 'image_url' => str_replace('public/', 'storage/', $shop->image_url)])->with('my_status', __('新しいお店を追加しました。'));
     }
 
     /**
@@ -68,7 +73,7 @@ class ShopController extends Controller
         } else {
             $login_user_id = '';
         }
-        return view('show', ['shop' => $shop, 'login_user_id' => $login_user_id]);
+        return view('show', ['shop' => $shop, 'login_user_id' => $login_user_id, 'image_url' => str_replace('public/', 'storage/', $shop->image_url)]);
     }
 
     /**
@@ -97,8 +102,12 @@ class ShopController extends Controller
       $shop->name = request('name');
       $shop->address = request('address');
       $shop->category_id = request('category_id');
+
+      $time = date("Ymdhis");
+
+      $shop->image_url = $request->image_url->storeAs('public/shop_images', $time.'_'.Auth::user()->id . '.jpg');
       $shop->save();
-      return redirect()->route('shop.detail', ['id' => $shop->id])->with('my_status', __('お店の情報を更新しました。'));
+      return redirect()->route('shop.detail', ['id' => $shop->id, 'image_url' => str_replace('public/', 'storage/', $shop->image_url)])->with('my_status', __('お店の情報を更新しました。'));
     }
 
     /**

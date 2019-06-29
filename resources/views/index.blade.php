@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+
     <h1>お店一覧</h1>
 
     @guest
@@ -17,7 +18,7 @@
       @endguest
   <table class="table table-striped table-hover">
       <tr>
-        <th>カテゴリ</th><th>店名</th><th>住所</th><th>投稿者</th>
+        <th>カテゴリ</th><th>店名</th><th>住所</th><th>投稿者</th><th>写真</th>
       </tr>
     @foreach ($shops as $shop)
       <tr>
@@ -29,6 +30,7 @@
         </td>
         <td>{{ $shop->address }}</td>
         <td>{{ $shop->user->name }}</td>
+        <td><img src="{{ str_replace('public/', 'storage/', $shop->image_url) }}" width="200px"></td>
       </tr>
     @endforeach
   </table>

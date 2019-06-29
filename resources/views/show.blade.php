@@ -2,6 +2,7 @@
 
 @section('content')
     <h1>{{ $shop->name }}</h1>
+    <p><img src ="/{{ $image_url }}" width="400px"></p>
       <p>
         {{ $shop->category->name }}
       </p>
