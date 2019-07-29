@@ -4,6 +4,8 @@
     <h1>新しいお店</h1>
     {{ Form::open(['route' => 'shop.store', 'method' => 'post', 'files' => true, "enctype"=>"multipart/form-data"]) }}
 
+    {{ csrf_field() }}
+
         {{--成功時のメッセージ--}}
     @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>

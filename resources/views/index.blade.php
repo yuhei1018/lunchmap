@@ -30,7 +30,7 @@
         </td>
         <td>{{ $shop->address }}</td>
         <td>{{ $shop->user->name }}</td>
-        <td><img src="{{ str_replace('public/', 'storage/', $shop->image_url) }}" width="200px"></td>
+        <td><img src="{{ $shop->image_url }}" width="200px"></td>
       </tr>
     @endforeach
   </table>

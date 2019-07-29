@@ -6,6 +6,7 @@ use App\Shop;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Storage;
 
 class ShopController extends Controller
 {
@@ -52,10 +53,14 @@ class ShopController extends Controller
 
         $time = date("Ymdhis");
 
-        $shop->image_url = $request->image_url->storeAs('public/shop_images', $time.'_'.Auth::user()->id . '.jpg');
+        $file = $request->file('image_url');
+        $path = Storage::disk('s3')->putFile('/', $file, 'public');
+        $shop->image_url = Storage::disk('s3')->url($path);
+
+        // $shop->image_url = $request->image_url->storeAs('public/shop_images', $time.'_'.Auth::user()->id . '.jpg');
         $shop->user_id = $user->id;
         $shop->save();
-        return redirect()->route('shop.detail', ['id' => $shop->id, 'image_url' => str_replace('public/', 'storage/', $shop->image_url)])->with('my_status', __('新しいお店を追加しました。'));
+        return redirect()->route('shop.detail', ['id' => $shop->id, 'image_url' => $shop->image_url])->with('my_status', __('新しいお店を追加しました。'));
     }
 
     /**
@@ -73,7 +78,7 @@ class ShopController extends Controller
         } else {
             $login_user_id = '';
         }
-        return view('show', ['shop' => $shop, 'login_user_id' => $login_user_id, 'image_url' => str_replace('public/', 'storage/', $shop->image_url)]);
+        return view('show', ['shop' => $shop, 'login_user_id' => $login_user_id, 'image_url' => $shop->image_url]);
     }
 
     /**
@@ -105,9 +110,12 @@ class ShopController extends Controller
 
       $time = date("Ymdhis");
 
-      $shop->image_url = $request->image_url->storeAs('public/shop_images', $time.'_'.Auth::user()->id . '.jpg');
+      $file = $request->file('image_url');
+      $path = Storage::disk('s3')->putFile('/', $file, 'public');
+      $shop->image_url = Storage::disk('s3')->url($path);
+
       $shop->save();
-      return redirect()->route('shop.detail', ['id' => $shop->id, 'image_url' => str_replace('public/', 'storage/', $shop->image_url)])->with('my_status', __('お店の情報を更新しました。'));
+      return redirect()->route('shop.detail', ['id' => $shop->id, 'image_url' => $shop->image_url])->with('my_status', __('お店の情報を更新しました。'));
     }
 
     /**

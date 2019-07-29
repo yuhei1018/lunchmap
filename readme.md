@@ -26,3 +26,6 @@ heroku
 DB
 MySQL(開発環境)
 MySQL(本番環境)
+
+画像アップロード
+・AWS S3
