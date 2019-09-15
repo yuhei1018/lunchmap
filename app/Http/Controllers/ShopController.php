@@ -19,10 +19,18 @@ class ShopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $shops = Shop::all();
-        return view('index', ['shops' => $shops]);
+      if ($request->filled('keyword')) {
+          $keyword = $request->input('keyword');
+          $message = '検索キーワード: ' . $keyword;
+          $shops = Shop::where('name', 'like', '%' . $keyword . '%')->get();
+      } else {
+          $message = '検索キーワード';
+          $shops = Shop::all();
+      }
+
+        return view('index', ['shops' => $shops, 'message' => $message]);
     }
 
     /**

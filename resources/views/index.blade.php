@@ -16,6 +16,11 @@
        </form>
       </div>
       @endguest
+
+
+@include('search')
+
+
   <table class="table table-striped table-hover">
       <tr>
         <th>カテゴリ</th><th>店名</th><th>住所</th><th>投稿者</th><th>写真</th>
